@@ -15,6 +15,9 @@ public class Champion {
 	private String alias;
 	private String[] roles;
 	
+	public static final String prefix = "--champ";
+	public static final String separator = ";.-.;";
+	
 	private static final String baseChampionIconURL = "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-icons";
 	
 	public Champion (String championName, long championId, String alias, String[] roles)
@@ -55,5 +58,10 @@ public class Champion {
 	public String toString()
 	{
 		return "Champion: " + name + " | ID: " + championId + " |  Roles: " + Arrays.toString(roles);
+	}
+	
+	public String toSaveState()
+	{
+		return this.getName() + separator + this.getAlias() + separator + this.getId() + separator + this.getRoles();
 	}
 }

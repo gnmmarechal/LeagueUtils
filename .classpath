@@ -12,5 +12,6 @@
 	<classpathentry kind="lib" path="D:/Users/gnmso/eclipse-workspace/LeagueUtils/themes/syntheticaPlain.jar"/>
 	<classpathentry kind="lib" path="D:/Users/gnmso/eclipse-workspace/LeagueUtils/themes/syntheticaStandard.jar"/>
 	<classpathentry kind="lib" path="D:/Users/gnmso/eclipse-workspace/LeagueUtils/JTattoo-1.6.11.jar"/>
+	<classpathentry kind="lib" path="D:/Users/gnmso/eclipse-workspace/LeagueUtils/ini4j-0.5.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

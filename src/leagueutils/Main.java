@@ -75,7 +75,9 @@ public class Main {
 		}*/
 		
 		rgapi = new RiotGamesAPIManager(Constants.apiKey);
-		rgapi.updateChampionInfo();
+		//rgapi.updateChampionInfo();
+		rgapi.updateChampionInfoDetailed();
+		rgapi.saveState("testcfg.cfg");
 		
 		try {
 			//UIManager.setLookAndFeel(new de.javasoft.synthetica.dark.SyntheticaDarkLookAndFeel());

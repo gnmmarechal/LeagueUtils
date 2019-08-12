@@ -75,21 +75,27 @@ public class ChampionManager {
 		return champList;
 	}
 	
+	public static boolean isDetailedChampion(Champion c)
+	{
+		try
+		{
+			DetailedChampion e = (DetailedChampion) c;
+			return true;
+		}
+		catch (Exception ex)
+		{
+			
+		}
+		return false;
+	}
 	public int getDetailedChampionCount()
 	{
 		int i = 0;
 		//System.out.println("Champ count: " + this.getChampionCount());
 		for (Champion c : this.getChampionList())
 		{
-			try
-			{
-				DetailedChampion e = (DetailedChampion) c;
+			if (isDetailedChampion(c))
 				++i;
-			}
-			catch (Exception e)
-			{
-				
-			}
 		}
 		return i;
 	}
@@ -97,5 +103,21 @@ public class ChampionManager {
 	public int getChampionCount()
 	{
 		return this.getChampionMap().keySet().size();
+	}
+
+	public String getSaveState() {
+		String finalRet = "";
+		for (Champion c : this.getChampionList())
+		{
+			if (isDetailedChampion(c))
+			{
+				finalRet += ((DetailedChampion) c).toSaveState(); // this may be unnecessary because the object overrides the method
+			}
+			else
+			{
+				finalRet += c.toSaveState();
+			}
+		}
+		return finalRet;
 	}
 }

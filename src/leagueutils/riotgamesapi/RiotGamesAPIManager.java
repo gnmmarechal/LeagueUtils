@@ -1,9 +1,13 @@
 package leagueutils.riotgamesapi;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.ini4j.Ini;
+import org.ini4j.InvalidFileFormatException;
+import org.ini4j.Wini;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -21,8 +25,39 @@ public class RiotGamesAPIManager {
 	private static final String basicChampionInfoLocation = "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-summary.json";
 	private static final String detailedChampionInfoLocation = "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champions";
 	private Object lock = new Object();
-	private static volatile long lastCallTime = 0;
 	
+	public void saveState(String fileName) throws IOException
+	{
+		File f = new File(fileName);
+		if (!f.exists())
+		{
+			f.createNewFile();
+		}
+		this.saveState(f);
+	}
+	public void saveState(File configFile) throws IOException
+	{
+		Ini ini = new Ini(configFile);
+		
+		ini.put("system", "apiKey", apiKey);
+		ini.put("system", "defaultRegion", defaultRequestRegion);
+		for (Champion c : championManager.getChampionList())
+		{
+
+			ini.put("championData", "championManager", championManager.getSaveState());
+
+		}
+		
+		ini.store();
+	}
+	
+	public RiotGamesAPIManager(File saveStateFile) throws InvalidFileFormatException, IOException
+	{
+		Ini ini = new Ini(saveStateFile);
+		this.apiKey = ini.get("system", "apiKey", String.class);
+		this.defaultRequestRegion = ini.get("system", "defaultRegion", APIRegion.class);
+		
+	}
 	public RiotGamesAPIManager(String apiKey)
 	{
 		this(apiKey, APIRegion.EUW1);
