@@ -2,6 +2,7 @@ package leagueutils;
 
 import java.awt.Dimension;
 import java.awt.Image;
+import java.util.ArrayList;
 import java.util.List;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -71,11 +72,39 @@ public class Main {
 		
 		rgapi = new RiotGamesAPIManager(Constants.apiKey);
 		rgapi.updateChampionInfo();
-		Summoner s = rgapi.getSummoner("gnmpolicemata");
-		s = new Summoner(s, rgapi.getMasteryData(s), rgapi.getMasteryScore(s));
-		System.out.println(s.getName());
-		ChampionMasteryWindow masteryWindow = new ChampionMasteryWindow(s, rgapi.getChampionManagerInstance());
-		masteryWindow.setVisible(true);
+		
+		List<Thread> threadList = new ArrayList<Thread>();
+		String[] usernames = { "Zero F0X Given", "gnmpolicemata", "Ant Ma Desh", "GOD MARTINEX" };
+		
+		for (String u : usernames)
+		{
+			Thread a = new Thread() {
+				public void run()
+				{
+					Summoner s = rgapi.getSummoner(u);
+					s = new Summoner(s, rgapi.getMasteryData(s), rgapi.getMasteryScore(s));
+					System.out.println(s.getName());
+					ChampionMasteryWindow masteryWindow = null;
+					try {
+						masteryWindow = new ChampionMasteryWindow(s, rgapi.getChampionManagerInstance());
+					} catch (MalformedURLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					masteryWindow.setVisible(true);
+				}
+			};
+			threadList.add(a);
+		}
+		
+		for (Thread t : threadList)
+		{
+			t.start();
+		}
+
 		
 		
 		

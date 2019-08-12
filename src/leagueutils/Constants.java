@@ -2,6 +2,6 @@ package leagueutils;
 
 public class Constants {
 	
-	public final static String apiKey = "RGAPI-48472b51-fc97-4c6e-b49f-e2f30f0a1e3d";
+	public final static String apiKey = "RGAPI-f2c8ec68-55ae-4652-8bc5-b93faae230ad";
 	
 }

@@ -20,6 +20,8 @@ public class RiotGamesAPIManager {
 	
 	private static final String basicChampionInfoLocation = "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-summary.json";
 	private static final String detailedChampionInfoLocation = "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champions";
+	private Object lock = new Object();
+	private static volatile long lastCallTime = 0;
 	
 	public RiotGamesAPIManager(String apiKey)
 	{
@@ -181,8 +183,12 @@ public class RiotGamesAPIManager {
 	{
 		String[] response = {};
         try {
-            HttpUtility.sendGetRequest(url);
-            response = HttpUtility.readMultipleLinesResponse();
+            
+            synchronized(lock)
+            	{
+            		HttpUtility.sendGetRequest(url);
+            		response = HttpUtility.readMultipleLinesResponse();
+            	}
             // System.out.println("Response Size: " + response.length);
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -190,8 +196,11 @@ public class RiotGamesAPIManager {
         	return "{}";
         }
         
-        HttpUtility.disconnect();
-        
+        synchronized(lock)
+        {
+        	HttpUtility.disconnect();
+        }
+            
         return response[0];
         
         
