@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 
 
 import external.ImageImplement;
+import leagueutils.forms.ChampionMasteryWindow;
 import leagueutils.riotgamesapi.Champion;
 import leagueutils.riotgamesapi.ChampionMastery;
 import leagueutils.riotgamesapi.DetailedChampion;
@@ -69,6 +70,13 @@ public class Main {
 		}*/
 		
 		rgapi = new RiotGamesAPIManager(Constants.apiKey);
+		rgapi.updateChampionInfo();
+		Summoner s = rgapi.getSummoner("gnmpolicemata");
+		s = new Summoner(s, rgapi.getMasteryData(s), rgapi.getMasteryScore(s));
+		System.out.println(s.getName());
+		ChampionMasteryWindow masteryWindow = new ChampionMasteryWindow(s, rgapi.getChampionManagerInstance());
+		masteryWindow.setVisible(true);
+		
 		
 		
 

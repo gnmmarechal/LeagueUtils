@@ -26,6 +26,10 @@ public class Summoner {
 		this.masteryScore = masteryScore;
 	}
 	
+	public Summoner(Summoner s, List<ChampionMastery> champMasteryData, int masteryScore)
+	{
+		this(s.getIconId(), s.getName(), s.getPUUID(), s.getId(), s.getAccountId(), s.getLevel(), s.getRevisionDate(), s.getRegion(), champMasteryData, masteryScore);
+	}
 	public Summoner(int iconId, String name, String puuid, String id, String accountId, long level, long revisionDate, APIRegion region)
 	{
 		this.iconId = iconId;
