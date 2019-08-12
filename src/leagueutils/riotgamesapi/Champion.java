@@ -62,6 +62,6 @@ public class Champion {
 	
 	public String toSaveState()
 	{
-		return this.getName() + separator + this.getAlias() + separator + this.getId() + separator + this.getRoles();
+		return this.getName() + separator + this.getAlias() + separator + this.getId() + separator + Arrays.toString(this.getRoles());
 	}
 }

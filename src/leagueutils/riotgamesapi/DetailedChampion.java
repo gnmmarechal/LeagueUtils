@@ -35,13 +35,13 @@ public class DetailedChampion extends Champion{
 	@Override
 	public String toString()
 	{
-		return "Champion: " + this.getName() + " " + this.title + " | ID: " + this.getId() + " |  Roles: " + Arrays.toString(this.getRoles());
+		return "Champion: " + this.getName() + ", " + this.title + " | ID: " + this.getId() + " |  Roles: " + Arrays.toString(this.getRoles());
 	}
 	
 	@Override
 	public String toSaveState()
 	{
-		return prefix + this.getName() + separator + this.getAlias() + separator + this.getId() + separator + this.getRoles() + separator + this.getTitle() + separator + this.getShortBio();
+		return prefix + this.getName() + separator + this.getAlias() + separator + this.getId() + separator + Arrays.toString(this.getRoles()) + separator + this.getTitle() + separator + this.getShortBio();
 	}
 
 }
