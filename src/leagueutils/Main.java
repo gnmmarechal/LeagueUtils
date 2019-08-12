@@ -6,9 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.text.ParseException;
 
 import javax.swing.JFrame;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
+import com.jtattoo.plaf.noire.NoireLookAndFeel;
 
 import external.ImageImplement;
 import leagueutils.forms.ChampionMasteryWindow;
@@ -73,8 +77,16 @@ public class Main {
 		rgapi = new RiotGamesAPIManager(Constants.apiKey);
 		rgapi.updateChampionInfo();
 		
+		try {
+			//UIManager.setLookAndFeel(new de.javasoft.synthetica.dark.SyntheticaDarkLookAndFeel());
+			UIManager.setLookAndFeel(Constants.uiLookAndFeel);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		};
+		
 		List<Thread> threadList = new ArrayList<Thread>();
-		String[] usernames = { "Zero F0X Given", "gnmpolicemata", "Ant Ma Desh", "GOD MARTINEX" };
+		String[] usernames = { "Alt F4444", "Zero F0X Given", "gnmpolicemata", "Ant Ma Desh", "GOD MARTINEX" };
 		
 		for (String u : usernames)
 		{
@@ -94,6 +106,8 @@ public class Main {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+					
+					
 					masteryWindow.setVisible(true);
 				}
 			};

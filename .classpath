@@ -7,5 +7,10 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="D:/Users/gnmso/eclipse-workspace/LeagueUtils/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="D:/Users/gnmso/eclipse-workspace/LeagueUtils/synthetica.jar"/>
+	<classpathentry kind="lib" path="D:/Users/gnmso/eclipse-workspace/LeagueUtils/themes/syntheticaDark.jar"/>
+	<classpathentry kind="lib" path="D:/Users/gnmso/eclipse-workspace/LeagueUtils/themes/syntheticaPlain.jar"/>
+	<classpathentry kind="lib" path="D:/Users/gnmso/eclipse-workspace/LeagueUtils/themes/syntheticaStandard.jar"/>
+	<classpathentry kind="lib" path="D:/Users/gnmso/eclipse-workspace/LeagueUtils/JTattoo-1.6.11.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

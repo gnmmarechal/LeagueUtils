@@ -155,6 +155,8 @@ public class RiotGamesAPIManager {
 	public List<ChampionMastery> getMasteryData(String summonerId, APIRegion region)
 	{
 		List<ChampionMastery> retList = new ArrayList<ChampionMastery>();
+		if (summonerId.equals("") || summonerId == null)
+			return null;
 		String jsonResponse = this.callURL(getAPIBaseURL(region) + "/lol/champion-mastery/v4/champion-masteries/by-summoner/" + summonerId + "?api_key=" + apiKey);
 		
 		JSONParser parser = new JSONParser();
@@ -179,6 +181,7 @@ public class RiotGamesAPIManager {
 		
 		return retList;
 	}
+	
 	private String callURL(String url)
 	{
 		String[] response = {};
