@@ -7,17 +7,25 @@ import java.util.List;
 
 import org.ini4j.Ini;
 import org.ini4j.InvalidFileFormatException;
-import org.ini4j.Wini;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import external.HttpUtility;
+import leagueutils.lol.game.Champion;
+import leagueutils.lol.game.ChampionMastery;
+import leagueutils.lol.game.DetailedChampion;
+import leagueutils.lol.game.GameMap;
+import leagueutils.lol.game.Lane;
+import leagueutils.lol.game.QueueType;
+import leagueutils.lol.game.Role;
+import leagueutils.lol.game.Summoner;
+import leagueutils.lol.platform.PlatformRegion;
 
 
 public class RiotGamesAPIManager {
 	private String apiKey;
-	private APIRegion defaultRequestRegion;
+	private PlatformRegion defaultRequestRegion;
 	private ChampionManager championManager;
 	
 	private static final String summonerNameRegex = "^[0-9\\\\p{L} _\\\\.]+$";
@@ -55,22 +63,22 @@ public class RiotGamesAPIManager {
 	{
 		Ini ini = new Ini(saveStateFile);
 		this.apiKey = ini.get("system", "apiKey", String.class);
-		this.defaultRequestRegion = ini.get("system", "defaultRegion", APIRegion.class);
+		this.defaultRequestRegion = ini.get("system", "defaultRegion", PlatformRegion.class);
 		
 	}
 	public RiotGamesAPIManager(String apiKey)
 	{
-		this(apiKey, APIRegion.EUW1);
+		this(apiKey, PlatformRegion.EUW1);
 	}
 	
-	public RiotGamesAPIManager(String apiKey, APIRegion defaultRegion)
+	public RiotGamesAPIManager(String apiKey, PlatformRegion defaultRegion)
 	{
 		this.apiKey = apiKey;
 		this.defaultRequestRegion = defaultRegion;
 		this.championManager = new ChampionManager();
 	}
 	
-	public static String getAPIBaseURL(APIRegion region)
+	public static String getAPIBaseURL(PlatformRegion region)
 	{
 		String ret = "";
 		
@@ -123,7 +131,7 @@ public class RiotGamesAPIManager {
 		return this.getSummoner(username, defaultRequestRegion);
 	}
 	
-	public Summoner getSummoner(String username, APIRegion region)
+	public Summoner getSummoner(String username, PlatformRegion region)
 	{
 		username = username.replace(" ", "%20");
 		int iconId = 0;
@@ -187,7 +195,7 @@ public class RiotGamesAPIManager {
 		return getMasteryData(summ.getId(), summ.getRegion());
 	}
 	
-	public List<ChampionMastery> getMasteryData(String summonerId, APIRegion region)
+	public List<ChampionMastery> getMasteryData(String summonerId, PlatformRegion region)
 	{
 		List<ChampionMastery> retList = new ArrayList<ChampionMastery>();
 		if (summonerId.equals("") || summonerId == null)
@@ -249,7 +257,7 @@ public class RiotGamesAPIManager {
 		return getMasteryScore(summoner.getId(), summoner.getRegion());
 	}
 
-	public int getMasteryScore(String summonerId, APIRegion region) {
+	public int getMasteryScore(String summonerId, PlatformRegion region) {
 		String response = this.callURL(getAPIBaseURL(region) + "/lol/champion-mastery/v4/scores/by-summoner/" + summonerId + "?api_key=" + apiKey);
 		int ret = 0;
 		try
@@ -365,5 +373,38 @@ public class RiotGamesAPIManager {
 	public ChampionManager getChampionManagerInstance()
 	{
 		return championManager;
+	}
+	
+	public List<SummonerMatch> getRecentMatchHistory(Summoner s) // Get recent match history
+	{
+		List<SummonerMatch> retList = new ArrayList<SummonerMatch>();
+		String jsonResponse = this.callURL(getAPIBaseURL(s.getRegion()) + "/lol/match/v4/matchlists/by-account/" + s.getAccountId() + "?api_key=" + this.apiKey);
+		JSONParser parser = new JSONParser();
+		
+		try
+		{
+			JSONArray objArr = (JSONArray)((JSONObject) parser.parse(jsonResponse)).get("matches");
+			
+			for (Object o : objArr)
+			{
+				JSONObject matchJsonObj = (JSONObject) o;
+				long playedChampId = (long) matchJsonObj.get("champion");
+				int queueId = java.lang.Math.toIntExact((long)matchJsonObj.get("queue"));
+				long gameId = (long)matchJsonObj.get("gameId");
+				Lane gameLane = Lane.valueOf((String)matchJsonObj.get("lane"));
+				Role gameRole = Role.valueOf((String)matchJsonObj.get("role"));
+				PlatformRegion region = PlatformRegion.valueOf((String)matchJsonObj.get("platformId"));
+				long timestamp = (long)matchJsonObj.get("timestamp");
+				int season = java.lang.Math.toIntExact((long)matchJsonObj.get("season"));
+				SummonerMatch curMatch = new SummonerMatch(gameLane, gameId, playedChampId, region, timestamp, queueId, gameRole, season);
+				
+				retList.add(curMatch);
+			}
+		} catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		
+		return retList;
 	}
 }

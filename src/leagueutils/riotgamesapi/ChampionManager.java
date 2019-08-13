@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import leagueutils.lol.game.Champion;
+import leagueutils.lol.game.DetailedChampion;
+
 public class ChampionManager {
 	private Map<Long, Champion> championMap;
 	

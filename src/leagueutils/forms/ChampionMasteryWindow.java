@@ -5,10 +5,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import external.ImageImplement;
-import leagueutils.riotgamesapi.Champion;
+import leagueutils.lol.game.Champion;
+import leagueutils.lol.game.ChampionMastery;
+import leagueutils.lol.game.Summoner;
 import leagueutils.riotgamesapi.ChampionManager;
-import leagueutils.riotgamesapi.ChampionMastery;
-import leagueutils.riotgamesapi.Summoner;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

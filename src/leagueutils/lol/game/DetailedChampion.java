@@ -1,4 +1,4 @@
-package leagueutils.riotgamesapi;
+package leagueutils.lol.game;
 
 import java.util.Arrays;
 

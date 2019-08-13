@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.text.ParseException;
@@ -16,11 +17,13 @@ import com.jtattoo.plaf.noire.NoireLookAndFeel;
 
 import external.ImageImplement;
 import leagueutils.forms.ChampionMasteryWindow;
-import leagueutils.riotgamesapi.Champion;
-import leagueutils.riotgamesapi.ChampionMastery;
-import leagueutils.riotgamesapi.DetailedChampion;
+import leagueutils.lol.game.Champion;
+import leagueutils.lol.game.ChampionMastery;
+import leagueutils.lol.game.DetailedChampion;
+import leagueutils.lol.game.GameMap;
+import leagueutils.lol.game.Summoner;
 import leagueutils.riotgamesapi.RiotGamesAPIManager;
-import leagueutils.riotgamesapi.Summoner;
+import leagueutils.riotgamesapi.SummonerMatch;
 
 public class Main {
 	
@@ -77,7 +80,15 @@ public class Main {
 		rgapi = new RiotGamesAPIManager(Constants.apiKey);
 		//rgapi.updateChampionInfo();
 		rgapi.updateChampionInfoDetailed();
-		rgapi.saveState("testcfg.cfg");
+		//rgapi.saveState("testcfg.cfg");
+		List<SummonerMatch> l = rgapi.getRecentMatchHistory(rgapi.getSummoner("gnmpolicemata"));
+		for (SummonerMatch match : l)
+		{
+			if (match.getMap() == GameMap.SummonersRift)
+				System.out.println(match + " | " + rgapi.getChampionInfoFromId(match.getChampionId()));
+		}
+		
+		(new Scanner(System.in)).nextLine();
 		
 		try {
 			//UIManager.setLookAndFeel(new de.javasoft.synthetica.dark.SyntheticaDarkLookAndFeel());
