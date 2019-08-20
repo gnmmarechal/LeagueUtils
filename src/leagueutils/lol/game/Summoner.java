@@ -149,6 +149,7 @@ public class Summoner {
 		{
 			m.add(this.sumMatches.get(key));
 		}
+		m.sort((o1, o2) -> Long.valueOf(o2.getTimestamp()).compareTo(Long.valueOf(o1.getTimestamp())));
 		return m;
 	}
 }

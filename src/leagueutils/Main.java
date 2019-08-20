@@ -81,13 +81,14 @@ public class Main {
 		//rgapi.updateChampionInfo();
 		rgapi.updateChampionInfoDetailed();
 		//rgapi.saveState("testcfg.cfg");
-		List<SummonerMatch> l = rgapi.getRecentMatchHistory(rgapi.getSummoner("gnmpolicemata"));
-		for (SummonerMatch match : l)
+		Summoner testSum = rgapi.getSummoner("gnmpolicemata");
+		testSum.addMatches(rgapi.getRecentMatchHistory(rgapi.getSummoner("gnmpolicemata")));
+		
+		for (SummonerMatch match : testSum.getMatchList())
 		{
 			if (match.getMap() == GameMap.SummonersRift)
 				System.out.println(match + " | " + rgapi.getChampionInfoFromId(match.getChampionId()));
 		}
-		
 		(new Scanner(System.in)).nextLine();
 		
 		try {

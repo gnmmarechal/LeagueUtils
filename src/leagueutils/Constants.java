@@ -4,7 +4,7 @@ import javax.swing.LookAndFeel;
 
 public class Constants {
 	
-	public final static String apiKey = "RGAPI-f2c8ec68-55ae-4652-8bc5-b93faae230ad";
+	public final static String apiKey = "RGAPI-6085fb61-3923-4f4b-ba11-a6dc89571676";
 	//public static LookAndFeel uiLookAndFeel = new com.jtattoo.plaf.noire.NoireLookAndFeel();
 	public static LookAndFeel uiLookAndFeel = getSyntheticaDarkUiLookAndFeel();
 	

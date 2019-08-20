@@ -29,7 +29,6 @@ public class ChampionMasteryWindow extends JFrame {
 	
 	private JLabel summonerNameLabel;
 	
-	@SuppressWarnings("deprecation")
 	public ChampionMasteryWindow(Summoner s, ChampionManager champManager) throws MalformedURLException, IOException
 	{
 		super();
