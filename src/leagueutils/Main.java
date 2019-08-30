@@ -77,6 +77,7 @@ public class Main {
 			f.setVisible(true);	
 		}*/
 		
+		//System.out.println(Constants.apiKey);
 		rgapi = new RiotGamesAPIManager(Constants.apiKey);
 		//rgapi.updateChampionInfo();
 		rgapi.updateChampionInfoDetailed();
@@ -102,9 +103,10 @@ public class Main {
 		List<Thread> threadList = new ArrayList<Thread>();
 		String[] usernames = { "Alt F4444", "Zero F0X Given", "gnmpolicemata", "Ant Ma Desh", "GOD MARTINEX" };
 		
-		for (String u : usernames)
+		int i = 0;
+		/*for (String u : usernames)
 		{
-			Thread a = new Thread() {
+			Thread a = new Thread(String.valueOf(++i)) {
 				public void run()
 				{
 					Summoner s = rgapi.getSummoner(u);
@@ -131,7 +133,7 @@ public class Main {
 		for (Thread t : threadList)
 		{
 			t.start();
-		}
+		}*/
 
 		
 		

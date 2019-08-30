@@ -61,7 +61,7 @@ public class ChampionMasteryWindow extends JFrame {
 		for (ChampionMastery cMastery : orderedMasteryList)
 		{
 			Champion c = champManager.getChampionList().stream().filter(champ -> champ.getId() == cMastery.getChampionId()).findFirst().orElse(null);
-			System.out.println(c);
+			System.out.println("[" + Thread.currentThread().getName() + "] :" + c);
 			ImageImplement champIconPanel = new ImageImplement(c.getIcon());
 			JPanel masteryPanel = new JPanel();
 			
